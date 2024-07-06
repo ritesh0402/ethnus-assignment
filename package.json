@@ -1,0 +1,21 @@
+{
+  "name": "ethnus",
+  "version": "1.0.0",
+  "description": "Ethnus mern stack internship assignment.",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritesh0402/ethnus-assignment.git"
+  },
+  "author": "Ritesh Mestry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ritesh0402/ethnus-assignment/issues"
+  },
+  "homepage": "https://github.com/ritesh0402/ethnus-assignment#readme",
+  "dependencies": {
+  }
+}
