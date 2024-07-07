@@ -3,6 +3,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import connectToMongo from './utils/db'
 import 'dotenv/config'
+import transactionRouter from './routes/transactionRouter'
 
 
 
@@ -14,7 +15,7 @@ app.use(express.json());
 app.use(cors({ credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 
-// app.use('/api/tasks', taskRouter);
+app.use('/api/transactions', transactionRouter);
 
 connectToMongo();
 
