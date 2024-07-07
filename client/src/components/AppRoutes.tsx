@@ -5,16 +5,19 @@ import Piechart from './stats/Piechart'
 import Report from './stats/Report'
 import Transactions from './transactions/Transactions'
 import Statistics from './stats/Statistics'
+import NavbarComponent from './NavbarCompopnent'
 
 const AppRoutes = () => {
    return (
       <Router>
+         <NavbarComponent />
          <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/transactions" element={<Transactions />} />
-            <Route path="/stats" element={<Statistics />}>
-               <Route path="bar-chart" element={<Barchart />} />
-               <Route path="pie-chart" element={<Piechart />} />
+            <Route path="/stats" >
+               <Route path="statistics" element={<Statistics />} />
+               <Route path="barchart" element={<Barchart />} />
+               <Route path="piechart" element={<Piechart />} />
                <Route path="report" element={<Report />} />
             </Route>
          </Routes>

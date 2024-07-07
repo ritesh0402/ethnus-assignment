@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import AppRoutes from './components/Routes';
+import AppRoutes from './components/AppRoutes';
 
 function App() {
   return (
