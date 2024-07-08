@@ -5,10 +5,10 @@ import ListTransactions from "./ListTransactions";
 
 
 const Transactions = () => {
-   const [transactions, setTransactions] = useState([])
+   const [transactions, setTransactions] = useState({ data: [], total: 0 })
    const [searchText, setSearchText] = useState('');
-   const [page, setPage] = useState(1); // Default page number
-   const [perPage, setPerPage] = useState(10); // Default items per page
+   const [page, setPage] = useState(1);
+   const [perPage, setPerPage] = useState(10);
 
    useEffect(() => {
       const fetchTransactions = async () => {
@@ -20,18 +20,22 @@ const Transactions = () => {
                   perPage: perPage
                }
             });
-            console.log('new data')
-            setTransactions(response.data); // Assuming data structure from API response
+            setTransactions(response.data.data);
          } catch (error) {
-            console.error('Error fetching transactions:', error);
+            console.error('Error:', error);
          }
       };
 
-      fetchTransactions();
+      const timer = setTimeout(() => {
+         fetchTransactions();
+      }, 500)
+
+      return () => clearTimeout(timer)
    }, [searchText, page, perPage]);
 
    const handleSearchInputChange = (event: any) => {
       setSearchText(event.target.value);
+      setPage(1);
    };
 
    const handlePageChange = (newPage: number) => {
@@ -40,37 +44,45 @@ const Transactions = () => {
 
    const handlePerPageChange = (event: any) => {
       setPerPage(Number(event.target.value));
+      setPage(1);
    };
 
    return (
-      <div>
-         <h1>Transactions</h1>
+      <div className=" py-5">
+         <h1 className="mt-4">Transactions</h1>
+         <div className="d-flex justify-content-evenly my-4">
 
-         <div>
-            <label htmlFor="searchInput">Search:</label>
-            <input
-               type="text"
-               id="searchInput"
-               value={searchText}
-               onChange={handleSearchInputChange}
-            />
-         </div>
-         <div>
-            <label htmlFor="perPageInput">Items per Page:</label>
-            <input
-               type="number"
-               id="perPageInput"
-               value={perPage}
-               onChange={handlePerPageChange}
-            />
+            <div style={{ display: 'inline' }}>
+               <label htmlFor="perPageInput">Items per Page: </label>
+               <input
+                  type="number"
+                  id="perPageInput"
+                  value={perPage}
+                  min={10}
+                  max={25}
+                  onChange={handlePerPageChange}
+               />
+            </div>
+
+            <div style={{ display: 'inline' }}>
+               <label htmlFor="searchInput">Search: </label>
+               <input
+                  type="text"
+                  id="searchInput"
+                  value={searchText}
+                  onChange={handleSearchInputChange}
+               />
+            </div>
+
+            <div style={{ display: 'inline' }}>
+               <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Previous</button>
+               <span> Page {page} </span>
+               <button onClick={() => handlePageChange(page + 1)} disabled={transactions.total <= (page * perPage)}>Next</button>
+            </div>
          </div>
 
          <ListTransactions transactions={transactions} />
-         <div>
-            <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Previous</button>
-            <span>Page {page}</span>
-            <button onClick={() => handlePageChange(page + 1)}>Next</button>
-         </div>
+
       </div>
    );
 }

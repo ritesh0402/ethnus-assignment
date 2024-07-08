@@ -8,8 +8,8 @@ const getTransactionReqValidator = [
    query('perPage', "perPage query invalid").exists().notEmpty().isString().escape(),
    (req: any, res: any, next: NextFunction) => {
       const err = validationResult(req);
-      if (err) {
-         res.status(400).send({ status: 400, data: "", msg: "Invalid query", error: err })
+      if (!err.isEmpty()) {
+         return res.status(400).send({ status: 400, data: "", msg: "Invalid query", error: err })
       }
       next();
    }
